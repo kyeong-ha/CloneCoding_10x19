@@ -1,0 +1,10 @@
+@mixin flex_sort{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@mixin hover_event{
+    background-color: $main_color;
+    color: white;
+}

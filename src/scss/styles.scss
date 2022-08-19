@@ -1,6 +1,247 @@
-body {
-  background: peru;
-  a {
-    color: blue;
+@import '_macro.scss';
+
+$main_color: #af7832;
+
+body{
+  margin:0;
+  padding:0;
+  color: $main_color;
+}
+h1{
+  line-height: 1em;
+  font-size: 21px;
+  font-weight: 400;
+  margin:0;
+}
+#pre-container-x{
+  animation: line-animation-x 0.8s;
+  display: grid;
+  grid-template-rows: auto calc(100vh - 131px) auto;
+  grid-template-areas: "1 2 3"
+  '3 3 3';
+  grid-gap: 1px;
+  height: 100vh;
+  width: 100vw;
+  background-color: transparent;
+  position: fixed;
+
+  div:not(:last-child){
+    border-bottom: 1px solid $main_color;
   }
+}
+#pre-container-y{
+  animation: line-animation-y 0.8s;
+  display: grid;
+  grid-template-columns: 1fr calc(100vh - 130px) 1fr;
+  grid-template-areas: "1 2 3"
+  '3 ';
+  grid-gap: 1px;
+  height: 100vh;
+  width: 100vw;
+  background-color: transparent;
+position: fixed;
+  div:not(:last-child){
+    border-right: 1px solid $main_color;
+  }
+}
+#main-container{
+  position: fixed;
+  display: grid;
+  width: 100vw;
+  height: 100vh;
+  grid-template-areas: 
+  "logo . menu"
+  "flex-left album flex-right"
+  ". footer .";
+  grid-template-rows: 1fr calc(100vh - 130px) 1fr;
+  grid-template-columns: 1fr calc(100vh - 130px) 1fr;
+}
+
+#logo-button{
+  animation: slide-down 2s;
+  grid-area: logo;
+  @include flex_sort;
+}
+
+#menu-button{
+  animation: slide-down 2s;
+  cursor:pointer;
+  grid-area: menu;
+  transition: all 0.1s 0s linear;
+  @include flex_sort;
+  &:hover{
+    @include hover_event;
+  }
+}
+
+#flex-left{
+  cursor:pointer;
+  overflow: hidden;
+  grid-area: flex-left;
+  display: flex;
+  flex-direction: column;
+  
+  div{
+    justify-self:center;
+    transition: all 0.1s 0s linear;
+    flex-basis: 20%;
+    @include flex_sort;
+    &:hover{
+      @include hover_event;
+    }
+    border-right: 1px solid $main_color;
+  }
+  div:not(:last-child){
+    border-bottom: 1px solid $main_color;
+  }
+  div:nth-child(1){
+    animation: slide-left 2s;
+  }
+  div:nth-child(2){
+    animation: slide-left 2.1s;
+  }
+  div:nth-child(3){
+    animation: slide-left 2.2s;
+  }
+  div:nth-child(4){
+    animation: slide-left 2.3s;
+  }
+  div:nth-child(5){
+    animation: slide-left 2.4s;
+  }
+}
+
+#album{
+  animation: fade-in 2s;
+  cursor:pointer;
+  overflow: hidden;
+  grid-area: album;
+  img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+#flex-right{
+  cursor:pointer;
+  overflow: hidden;
+  grid-area: flex-right;
+
+  display: flex;
+  flex-direction: column;
+  div{
+    transition: all 0.1s 0s linear;
+    flex-basis: 20%;
+    @include flex_sort;
+    &:hover{
+      @include hover_event;
+    }
+    border-left: 1px solid $main_color;
+  }
+  div:not(:last-child){
+    border-bottom: 1px solid $main_color;
+  }
+
+  div:nth-child(1){
+    animation: slide-right 2s;
+  }
+  div:nth-child(2){
+    animation: slide-right 2.1s;
+  }
+  div:nth-child(3){
+    animation: slide-right 2.2s;
+  }
+  div:nth-child(4){
+    animation: slide-right 2.3s;
+  }
+  div:nth-child(5){
+    animation: slide-right 2.4s;
+  }
+}
+
+#footer{
+  animation: slide-up 2s;
+  overflow: hidden;
+  grid-area: footer;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  .footer-text{
+    text-transform: uppercase;
+    animation: moving-text 20s linear infinite;
+  }
+}
+
+@keyframes moving-text{
+  from{ transform: translate(0);}
+  to{transform: translateX(-70%);}
+}
+
+@media (max-width: 800px) and (min-width: 735px){
+  #main-container{
+  grid-template-areas: 
+  "logo . . menu"
+  "flex-left flex-left flex-right flex-right"
+  ". footer footer .";
+  grid-template-rows: 1fr calc(100vw - 130px) 1fr;
+  grid-template-columns: 124px 1fr 1fr 124px; // calc((100vw - 140px)/2) calc((100vw - 140px)/2) 1fr;
+  }
+  #logo-button{
+    border-bottom: 0px;
+  }
+  #menu-button{
+    border-bottom: 0px;
+  }
+  #flex-left{
+    border-top: 1px solid $main_color;
+    border-right: 1px solid $main_color;
+
+  }
+  #flex-right{
+    border-top: 1px solid $main_color;
+  }
+  #album{
+    display: none;
+  }
+}
+
+@keyframes line-animation-x{
+  from{transform: translateX(-100%);}
+  to{transform: translateX(0%);}
+}
+
+@keyframes line-animation-y{
+  from{transform: translateY(-100%);}
+  to{transform: translateY(0%);}
+}
+
+@keyframes fade-in{
+  0%{opacity: 0;}
+  50%{opacity: 0;}
+  80%{opacity: 100;}
+}
+@keyframes slide-down{
+  0%{transform: translateY(-100%);}
+  50%{transform: translateY(-100%);}
+  80%{transform: translateY(0%);}
+  100%{transform: translateY(0%);}
+}
+@keyframes slide-up{
+  0%{transform: translateY(100%);}
+  50%{transform: translateY(100%);}
+  80%{transform: translateY(0%);}
+  100%{transform: translateY(0%);}
+}
+@keyframes slide-right{
+  0%{transform: translateX(100%);}
+  50%{transform: translateX(100%);}
+  80%{transform: translateX(0%);}
+  100%{transform: translateX(0%);}
+}
+@keyframes slide-left{
+  0%{transform: translateX(-100%);}
+  50%{transform: translateX(-100%);}
+  80%{transform: translateX(0%);}
+  100%{transform: translateX(0%);}
 }
